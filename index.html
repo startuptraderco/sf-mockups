@@ -71,6 +71,16 @@ h1{font-size:24px;margin-bottom:4px}h2{font-size:16px;margin:0 0 12px}.sub{color
 .tb{position:absolute;left:8px;top:8px;font-size:10px;font-weight:800;padding:3px 8px;border-radius:20px;background:rgba(0,0,0,.65)}.tb.ok,.tb.fr{color:var(--mint)}.tb.lk{color:var(--gold)}
 .du{position:absolute;right:8px;bottom:8px;font-size:11px;background:rgba(0,0,0,.65);padding:2px 7px;border-radius:6px}
 .tl{margin-top:8px;font-size:13px;font-weight:600}.tc.lkd .tt{filter:saturate(.3) brightness(.7)!important}
+.tvhero{display:grid;grid-template-columns:1.6fr 1fr;gap:20px;margin-bottom:26px}
+.vid{aspect-ratio:16/9;border-radius:14px;overflow:hidden;border:1px solid var(--line);background:#000;position:relative}.vid iframe{width:100%;height:100%;border:0;display:block}
+.vfall{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;background:linear-gradient(135deg,#10231b,#0b0c10);color:var(--mut);font-size:13px;z-index:0}.vid iframe{position:relative;z-index:1}
+.live{display:inline-flex;align-items:center;gap:6px;background:#e0302d;color:#fff;font-size:11px;font-weight:800;padding:3px 10px;border-radius:20px;letter-spacing:.4px}.live:before{content:"";width:7px;height:7px;border-radius:50%;background:#fff}
+.tvg{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:16px}
+.vc{cursor:pointer}.vt2{aspect-ratio:16/9;border-radius:12px;overflow:hidden;position:relative;border:1px solid var(--line);background:#12141a}.vt2 img{width:100%;height:100%;object-fit:cover;display:block}.vc:hover .vt2,.vc.sel .vt2{border-color:var(--gold)}
+.vt2 .pp{right:auto;left:50%;top:50%;margin:-18px 0 0 -18px;opacity:0;transition:.15s}.vc:hover .pp{opacity:1}
+.vc .tl{display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.pbtn{display:inline-flex;gap:8px;flex-wrap:wrap}
+@media(max-width:900px){.tvhero{grid-template-columns:1fr}}
 .expl{font-size:12px;color:var(--mut);margin-top:10px}
 .ov{position:fixed;inset:0;background:rgba(0,0,0,.65);display:none;align-items:center;justify-content:center;z-index:50;padding:16px}.ov.on{display:flex}
 .modal{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:26px;max-width:430px;width:100%;position:relative}
@@ -83,7 +93,8 @@ h1{font-size:24px;margin-bottom:4px}h2{font-size:16px;margin:0 0 12px}.sub{color
 <aside><div class="logo">Startup<span>Funded</span></div>
 <div class="nav">
 <a><i></i>Resumen</a><a><i></i>Mis cuentas</a><a><i></i>Retiros</a><a><i></i>Billetera</a>
-<a data-n="basic" class="on"><i></i>Cursos Básicos <span class="new">NUEVO</span></a>
+<a data-n="tv" class="on"><i></i>StartupFunded TV <span class="new">NUEVO</span></a>
+<a data-n="basic"><i></i>Cursos Básicos <span class="new">NUEVO</span></a>
 <a data-n="premium"><i></i>Cursos Premium <span class="new">NUEVO</span></a>
 <a data-n="acomp"><i></i>Acompañamiento Premium <span class="new">NUEVO</span></a>
 <a><i></i>Soporte</a><a><i></i>Configuración</a></div></aside>
@@ -181,15 +192,26 @@ function openCourse(id,focusM){
   h+='</div></div></div>';
   $(h);
 }
-var VIEW={semin:'thumbs'};
-function getMode(id){return VIEW[id]||'list'}
+var VIEW={};
+function getMode(id){return VIEW[id]||'thumbs'}
 function setMode(id,m){VIEW[id]=m;openCourse(id)}
 function toggleHTML(id){var m=getMode(id);return '<div class="vsw"><button class="'+(m==='list'?'on':'')+'" onclick="setMode(\''+id+'\',\'list\')">☰ Lista</button><button class="'+(m==='thumbs'?'on':'')+'" onclick="setMode(\''+id+'\',\'thumbs\')">▦ Miniaturas</button></div>'}
+var MODX={};
+function modOpen(c,id,mi,n){
+  if(!MODX[id]){MODX[id]={};MODX[id][(c.sec==='basic'&&pctOf(c)>0)?n.m:0]=true}
+  return !!MODX[id][mi];
+}
+function toggleThumbMod(id,mi){
+  MODX[id][mi]=!MODX[id][mi];var o=MODX[id][mi];
+  document.getElementById('tg-'+id+'-'+mi).style.display=o?'grid':'none';
+  document.getElementById('tb-'+id+'-'+mi).textContent=o?'Ver menos ▲':'Ver más ▼';
+}
 function thumbsHTML(c,id,n){
-  var h='';
+  var h='',multi=c.mods.length>1;
   c.mods.forEach(function(m,mi){
-    if(c.mods.length>1)h+='<h2 style="margin:18px 0 10px">Módulo '+(mi+1)+' · '+m.t+'</h2>';
-    h+='<div class="tg">';
+    var open=!multi||modOpen(c,id,mi,n),d=m.l.filter(function(x){return x.done}).length;
+    if(multi)h+='<div style="display:flex;align-items:center;justify-content:space-between;gap:12px;margin:20px 0 10px"><div><h2 style="margin:0">Módulo '+(mi+1)+' · '+m.t+'</h2><div class="note">'+m.l.length+' lecciones'+(c.sec==='basic'?' · '+d+' completadas':'')+'</div></div><button class="btn ghost" id="tb-'+id+'-'+mi+'" onclick="toggleThumbMod(\''+id+'\','+mi+')">'+(open?'Ver menos ▲':'Ver más ▼')+'</button></div>';
+    h+='<div class="tg" id="tg-'+id+'-'+mi+'" style="display:'+(open?'grid':'none')+'">';
     m.l.forEach(function(x,li){
       var free=isFree(c,mi,li);
       var st=!free?'<span class="tb lk">🔒 Premium</span>':(x.done?'<span class="tb ok">✓ Completada</span>':((c.free||c.sec==='premium')?'<span class="tb fr">GRATIS</span>':''));
@@ -241,6 +263,28 @@ function unlock(){
 function lockModal(c){
   openModal('<button class="x" onclick="closeModal()">×</button><div style="font-size:34px">🔒</div><h2>Lección Premium</h2><p class="note" style="margin-bottom:16px">Las 2 primeras lecciones del módulo 1 de «'+c.title+'» son gratis. Desbloquea el curso para ver esta lección y el resto del contenido.</p><button class="btn" style="width:100%" onclick="closeModal()">Desbloquear curso</button><button class="btn ghost" style="width:100%;margin-top:8px" onclick="closeModal()">Seguir con las lecciones gratis</button>');
 }
+var STREAMS=[
+ {id:'F5bImyCzLOs',t:'🔴 NASDAQ FUTUROS EN VIVO | Análisis Sesión Nueva York NQ y MNQ | Startup Founder TV',d:'17 nov',v:823},
+ {id:'4nU5qGhaUpc',t:'🔴 NASDAQ EN VIVO HOY: ANÁLISIS DEL NQ EN SESIÓN NEW YORK | Niveles Clave y Oportunidades',d:'16 nov',v:179},
+ {id:'tHaY9BFiq7A',t:'ANÁLISIS FUTUROS NASDAQ EN VIVO | SESIÓN NY | STARTUPFUNDED TV',d:'14 nov',v:1141},
+ {id:'zOeuvBuF3pQ',t:'🔴 FUTUROS NASDAQ EN VIVO | Análisis Sesión Asia | STARTUPFUNDEDTV',d:'13 nov',v:1176},
+ {id:'7ra_zJAUT4w',t:'🔴 FUTUROS NASDAQ EN VIVO | Análisis del Mercado de Nueva York | STARTUPFUNDEDTV',d:'12 nov',v:1347},
+ {id:'Nuf1LDjduEg',t:'FUTUROS NASDAQ HOY: Análisis de Mercado EN VIVO | STARTUPFUNDED TV',d:'11 nov',v:1019},
+ {id:'No-suR-A7DY',t:'ANÁLISIS EN VIVO DEL NASDAQ | Futuros de Nasdaq con NinjaTrader | Startup Funded TV',d:'11 nov',v:734},
+ {id:'1M50CPJEi3w',t:'NASDAQ EN VIVO 🔴 Análisis de Futuros NQ y MNQ | Day Trading – Sesión Asia',d:'11 nov',v:1264},
+ {id:'lX1ZR5LfjhI',t:'NASDAQ EN VIVO: Aprende a Operar Futuros y Aprovechar las Cuentas de Fondeo | StartupFundedTV',d:'6 nov',v:1184}
+];
+var CHANNEL='https://www.youtube.com/@startuptraderco/streams';
+function showTV(){
+  stop();setNav('tv');
+  var h='<div style="display:flex;justify-content:space-between;align-items:flex-end;gap:16px;flex-wrap:wrap;margin-bottom:6px"><div><h1>StartupFunded TV</h1><p class="sub" style="margin-bottom:0">Análisis del Nasdaq en vivo. Estas son nuestras últimas sesiones.</p></div><a class="btn ghost" href="'+CHANNEL+'" target="_blank" rel="noopener" style="text-decoration:none">Ver todos los directos en YouTube ↗</a></div>';
+  h+='<div class="sec" style="margin:22px 0 12px"><h2 style="font-size:19px;margin:0">Últimas 4 sesiones</h2></div><div class="tvg">';
+  STREAMS.slice(0,4).forEach(function(x){
+    h+='<a class="vc" href="https://www.youtube.com/watch?v='+x.id+'" target="_blank" rel="noopener" style="text-decoration:none;color:inherit;display:block"><div class="vt2"><img loading="lazy" src="https://i.ytimg.com/vi/'+x.id+'/hqdefault.jpg" alt="" onerror="this.style.display=\'none\'"><div class="pp">▶</div><span class="tb fr" style="color:#fff;background:#e0302d">▶ YOUTUBE</span></div><div class="tl">'+x.t+'</div><div class="note">'+x.d+' · '+x.v.toLocaleString('es')+' vistas</div></a>';
+  });
+  h+='</div><div style="margin-top:26px;text-align:center"><a class="btn" href="'+CHANNEL+'" target="_blank" rel="noopener" style="text-decoration:none">Ver más en YouTube ↗</a></div>';
+  $(h);
+}
 function showAcomp(){
   stop();setNav('acomp');
   var h='<h1>Acompañamiento Premium</h1><p class="sub">Trabaja de la mano con traders experimentados. No son cursos: son programas de acompañamiento.</p><div class="offers">';
@@ -257,6 +301,6 @@ function confirmRes(){
 function openModal(h){document.getElementById('modal').innerHTML=h;document.getElementById('ov').classList.add('on')}
 function closeModal(){document.getElementById('ov').classList.remove('on')}
 document.getElementById('ov').onclick=function(e){if(e.target.id==='ov')closeModal()};
-document.querySelectorAll('[data-n]').forEach(function(a){a.onclick=function(){var k=a.dataset.n;k==='acomp'?showAcomp():showList(k)}});
-showList('basic');
+document.querySelectorAll('[data-n]').forEach(function(a){a.onclick=function(){var k=a.dataset.n;k==='acomp'?showAcomp():k==='tv'?showTV():showList(k)}});
+showTV();
 </script></body></html>
