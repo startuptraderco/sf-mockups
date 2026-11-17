@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="es"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Mockup · Cursos · StartupFunded</title>
+<style>
+:root{--bg:#0e0f12;--panel:#16181d;--card:#1c1f26;--line:#2a2e38;--gold:#d4af37;--em:#1f8a5f;--mint:#8fd3b6;--txt:#f2f3f5;--mut:#9aa0ab}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--bg);color:var(--txt);font-family:Inter,Arial,sans-serif;font-size:14px;line-height:1.45}
+.app{display:grid;grid-template-columns:230px 1fr;min-height:100vh}
+aside{background:var(--panel);border-right:1px solid var(--line);padding:20px 14px;position:sticky;top:0;height:100vh}
+.logo{font-weight:800;font-size:17px;letter-spacing:.3px;margin:0 8px 26px}.logo span{color:var(--gold)}
+.nav a{display:flex;align-items:center;gap:10px;padding:10px 12px;border-radius:10px;color:var(--mut);text-decoration:none;margin-bottom:4px;cursor:default}
+.nav a[data-n]{cursor:pointer}.nav a[data-n]:hover{background:rgba(255,255,255,.04)}
+.nav a.on{background:rgba(212,175,55,.12);color:var(--gold);font-weight:600}
+.nav i{width:16px;height:16px;border-radius:4px;background:currentColor;opacity:.55;display:inline-block;flex:none}
+.new{margin-left:auto;background:var(--gold);color:#111;font-size:10px;font-weight:800;padding:2px 6px;border-radius:20px}
+main{padding:22px 30px 50px;min-width:0}
+.top{display:flex;justify-content:space-between;align-items:center;margin-bottom:18px;gap:12px}
+.note{color:var(--mut);font-size:12px}
+.av{width:32px;height:32px;border-radius:50%;background:linear-gradient(135deg,var(--gold),var(--em));flex:none}
+h1{font-size:24px;margin-bottom:4px}h2{font-size:16px;margin:0 0 12px}.sub{color:var(--mut);margin-bottom:18px}
+.screen{display:none}.screen.on{display:block}
+.card{background:var(--card);border:1px solid var(--line);border-radius:14px}
+.bar{height:7px;background:#2b2f39;border-radius:6px;overflow:hidden}.bar b{display:block;height:100%;background:linear-gradient(90deg,var(--em),var(--mint))}
+.btn{display:inline-block;background:var(--gold);color:#111;font-weight:700;border:0;border-radius:10px;padding:10px 18px;cursor:pointer;font-size:13px}
+.btn:hover{filter:brightness(1.08)}
+.btn.ghost{background:none;border:1px solid var(--line);color:var(--txt);font-weight:500}.btn.ghost:hover{border-color:var(--gold);color:var(--gold)}
+.back{background:none;border:0;color:var(--gold);cursor:pointer;font-size:13px;font-weight:600;margin-bottom:12px;padding:0}
+.crumb{color:var(--mut);font-size:12px;margin-bottom:8px}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(270px,1fr));gap:16px}
+.c{overflow:hidden;cursor:pointer;transition:.15s}.c:hover{border-color:var(--gold);transform:translateY(-2px)}
+.thumb{height:128px;position:relative;display:flex;align-items:flex-end;padding:12px;font-weight:800;font-size:18px}
+.g1{background:linear-gradient(135deg,#1f8a5f,#0e3b2a)}.g2{background:linear-gradient(135deg,#b8902a,#4a3a10)}.g3{background:linear-gradient(135deg,#3b4a7a,#161b30)}.g4{background:linear-gradient(135deg,#6a3b7a,#241230)}.g5{background:linear-gradient(135deg,#2e6f7a,#10272b)}
+.badge{position:absolute;top:10px;right:10px;font-size:10px;font-weight:800;padding:3px 8px;border-radius:20px;background:rgba(0,0,0,.6)}
+.badge.free{color:var(--mint)}.badge.lock{color:var(--gold)}
+.body{padding:14px}.meta{color:var(--mut);font-size:12px;margin:4px 0 10px}
+.pct{display:flex;justify-content:space-between;font-size:12px;color:var(--mut);margin-top:6px}
+.cols{display:grid;grid-template-columns:1fr 320px;gap:20px}
+.mod{margin-bottom:10px;overflow:hidden}
+.mh{display:flex;justify-content:space-between;align-items:center;padding:14px 16px;font-weight:600;cursor:pointer;user-select:none;gap:10px}
+.mh:hover{background:rgba(255,255,255,.03)}
+.mh .arr{display:inline-block;transition:.2s;color:var(--gold);margin-right:8px}.mod.open .arr{transform:rotate(90deg)}
+.lessons{display:none}.mod.open .lessons{display:block}
+.les{display:flex;align-items:center;gap:12px;padding:10px 16px;border-top:1px solid var(--line);color:var(--mut);cursor:pointer}
+.les:hover{background:rgba(255,255,255,.04);color:var(--txt)}
+.les .d{width:20px;height:20px;border-radius:50%;border:2px solid var(--line);flex:none;display:flex;align-items:center;justify-content:center;font-size:11px}
+.les.done .d{background:var(--em);border-color:var(--em);color:#fff}.les.cur{color:var(--txt);background:rgba(212,175,55,.07)}.les.cur .d{border-color:var(--gold);color:var(--gold)}
+.les.lk .d{border:0;font-size:13px}.les .t{margin-left:auto;font-size:12px;display:flex;gap:8px;align-items:center}
+.fr{font-size:10px;font-weight:800;color:var(--mint);border:1px solid var(--mint);border-radius:20px;padding:1px 7px}
+.ring{width:96px;height:96px;border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto 12px}
+.ring div{width:76px;height:76px;border-radius:50%;background:var(--card);display:flex;align-items:center;justify-content:center;font-weight:800;font-size:20px}
+.player{aspect-ratio:16/9;border-radius:14px;background:linear-gradient(135deg,#10231b,#0b0c10);display:flex;align-items:center;justify-content:center;position:relative;border:1px solid var(--line);cursor:pointer;overflow:hidden}
+.play{width:70px;height:70px;border-radius:50%;background:var(--gold);display:flex;align-items:center;justify-content:center;font-size:26px;color:#111}
+.pc{position:absolute;left:14px;right:14px;bottom:12px}.pc .bar{height:5px}
+.vt{position:absolute;top:12px;left:16px;font-size:12px;color:var(--mut)}
+.ltabs{display:flex;gap:18px;border-bottom:1px solid var(--line);margin:16px 0 14px}.ltabs span{padding:8px 0;color:var(--mut)}.ltabs span.on{color:var(--gold);border-bottom:2px solid var(--gold)}
+.mat{display:flex;justify-content:space-between;padding:10px 12px;border:1px solid var(--line);border-radius:10px;margin-bottom:8px}
+.promo{padding:14px 18px;margin-bottom:16px;display:flex;justify-content:space-between;align-items:center;gap:12px;background:linear-gradient(120deg,#2a2410,#1c1f26 70%);border-color:#4a3d14}
+.offers{display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:18px}
+.offer{padding:24px;border-color:#4a3d14;background:linear-gradient(150deg,#2a2410,#1c1f26 55%);display:flex;flex-direction:column}
+.offer.b{border-color:#1f4d3a;background:linear-gradient(150deg,#12281f,#1c1f26 55%)}
+.pill{align-self:flex-start;font-size:10px;font-weight:800;letter-spacing:.5px;padding:3px 9px;border-radius:20px;background:rgba(212,175,55,.15);color:var(--gold);margin-bottom:10px}
+.feat{list-style:none;margin:14px 0 18px;color:var(--mut)}.feat li{padding:4px 0}.feat li:before{content:"✓ ";color:var(--mint)}
+.week{display:grid;grid-template-columns:repeat(5,1fr);gap:8px;margin:4px 0 18px}.week div{background:#12281f;border:1px solid #1f4d3a;border-radius:10px;padding:10px 6px;text-align:center;font-size:12px}.week b{display:block;color:var(--mint);font-size:13px}
+.prom{margin:10px 0 4px;padding:12px 14px;border-left:3px solid var(--gold);background:rgba(212,175,55,.08);border-radius:0 10px 10px 0;font-size:14px;line-height:1.5;color:#f2e6b8}
+.offer.b .prom{border-color:var(--mint);background:rgba(143,211,182,.08);color:#d6f0e3}
+.vsw{display:inline-flex;border:1px solid var(--line);border-radius:10px;overflow:hidden;margin-bottom:14px}.vsw button{background:none;border:0;color:var(--mut);padding:7px 14px;cursor:pointer;font-size:12px}.vsw button.on{background:var(--gold);color:#111;font-weight:700}
+.tg{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:16px}.tc{cursor:pointer}
+.tt{aspect-ratio:16/9;border-radius:12px;position:relative;overflow:hidden;border:1px solid var(--line);transition:.15s}.tc:hover .tt{border-color:var(--gold);transform:translateY(-2px)}
+.tt .num{position:absolute;left:12px;bottom:6px;font-size:40px;font-weight:800;color:rgba(255,255,255,.85);line-height:1}
+.pp{position:absolute;right:12px;top:50%;margin-top:-18px;width:36px;height:36px;border-radius:50%;background:rgba(212,175,55,.95);color:#111;display:flex;align-items:center;justify-content:center;font-size:14px}
+.tb{position:absolute;left:8px;top:8px;font-size:10px;font-weight:800;padding:3px 8px;border-radius:20px;background:rgba(0,0,0,.65)}.tb.ok,.tb.fr{color:var(--mint)}.tb.lk{color:var(--gold)}
+.du{position:absolute;right:8px;bottom:8px;font-size:11px;background:rgba(0,0,0,.65);padding:2px 7px;border-radius:6px}
+.tl{margin-top:8px;font-size:13px;font-weight:600}.tc.lkd .tt{filter:saturate(.3) brightness(.7)!important}
+.expl{font-size:12px;color:var(--mut);margin-top:10px}
+.ov{position:fixed;inset:0;background:rgba(0,0,0,.65);display:none;align-items:center;justify-content:center;z-index:50;padding:16px}.ov.on{display:flex}
+.modal{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:26px;max-width:430px;width:100%;position:relative}
+.modal h2{font-size:20px;margin-bottom:6px}.x{position:absolute;right:14px;top:10px;background:none;border:0;color:var(--mut);font-size:22px;cursor:pointer}
+.modal input,.modal select{width:100%;background:#12141a;border:1px solid var(--line);border-radius:10px;padding:10px 12px;color:var(--txt);margin:6px 0 12px;font-size:13px}
+.modal label{font-size:12px;color:var(--mut)}
+@media(max-width:900px){.app{grid-template-columns:1fr}aside{display:none}.cols{grid-template-columns:1fr}}
+</style></head><body>
+<div class="app">
+<aside><div class="logo">Startup<span>Funded</span></div>
+<div class="nav">
+<a><i></i>Resumen</a><a><i></i>Mis cuentas</a><a><i></i>Retiros</a><a><i></i>Billetera</a>
+<a data-n="basic" class="on"><i></i>Cursos Básicos <span class="new">NUEVO</span></a>
+<a data-n="premium"><i></i>Cursos Premium <span class="new">NUEVO</span></a>
+<a data-n="acomp"><i></i>Acompañamiento Premium <span class="new">NUEVO</span></a>
+<a><i></i>Soporte</a><a><i></i>Configuración</a></div></aside>
+<main>
+<div class="top"><span class="note">Mockup interactivo · haz clic en secciones, módulos y lecciones · datos de ejemplo</span><div class="av"></div></div>
+<div id="view"></div>
+</main></div>
+
+<div class="ov" id="ov"><div class="modal" id="modal"></div></div>
+
+<script>
+// ---------- DATOS ----------
+var L=function(t,d,o){o=o||{};return {t:t,d:d,done:!!o.done}};
+var COURSES={
+ semin:{id:'semin',sec:'basic',free:true,title:'Seminario La Ciencia Detrás del Trading',g:'g2',desc:'Seminario introductorio gratuito: entiende cómo funciona el trading y por qué la mayoría pierde.',mods:[
+  {t:'Seminario',l:[L('Por qué la mayoría de los traders pierde',25),L('La ciencia detrás de la consistencia',30),L('Del seminario a tu primera cuenta fondeada',22)]}]},
+ nasdaq:{id:'nasdaq',sec:'basic',title:'Nasdaq 1.0',short:'Nasdaq 1.0',g:'g1',desc:'Aprende a operar el Nasdaq (NQ y MNQ) desde cero.',mods:[
+  {t:'Introducción al Nasdaq y los futuros',l:[L('Qué son los futuros',12,{done:1}),L('Contratos NQ y MNQ',18,{done:1}),L('Horarios y sesiones de mercado',10,{done:1}),L('Tu plataforma y primeras órdenes',16,{done:1}),L('Quiz del módulo',8,{done:1})]},
+  {t:'Estructura de mercado',l:[L('Tendencia, rango y niveles clave',15,{done:1}),L('El NQ en la sesión de NY',18,{done:1}),L('Soportes y resistencias en el Nasdaq',22,{done:1}),L('Ejercicio práctico',12,{done:1}),L('Quiz del módulo',8)]},
+  {t:'Gestión del riesgo en NQ y MNQ',l:[L('Tamaño de posición',16,{done:1}),L('Pérdida máxima EOT',14,{done:1}),L('Regla de consistencia del 40%',14),L('Riesgo por operación',22),L('Cómo evitar quemar la cuenta',19),L('Quiz del módulo',8)]},
+  {t:'Estrategias de entrada',l:[L('Entradas a favor de la tendencia',20),L('Entradas en rango',18),L('Ruptura y retroceso',21),L('Confirmaciones de entrada',15),L('Caso práctico en vivo',25),L('Quiz del módulo',8)]},
+  {t:'Psicología del trader',l:[L('Tu plan de trading',14),L('Controlar el miedo y la ansiedad',17),L('Disciplina después de una pérdida',15),L('Diario de trading',12)]},
+  {t:'Plan de trading y cuenta fondeada',l:[L('Elegir tu cuenta',13),L('Pasar la evaluación',20),L('Retirar tus ganancias',16),L('Siguientes pasos',10)]}]},
+ ninja:{id:'ninja',sec:'basic',title:'Plataforma NinjaTrader',g:'g3',desc:'Domina NinjaTrader para operar con tu cuenta fondeada.',mods:[
+  {t:'Instalación y conexión',l:[L('Descargar e instalar',8),L('Conectar con Rithmic',12),L('Configurar tu espacio de trabajo',15)]},
+  {t:'Gráficos y plantillas',l:[L('Tipos de gráficos',10),L('Indicadores esenciales',14),L('Guardar plantillas',9)]},
+  {t:'Órdenes y ATM',l:[L('Tipos de órdenes',12),L('Estrategias ATM',16),L('Atajos de teclado',8)]},
+  {t:'Buenas prácticas',l:[L('Copy trading entre cuentas',15),L('Solución de problemas comunes',10)]}]},
+ inst:{id:'inst',sec:'premium',title:'Análisis Institucional Avanzado 2.0',g:'g4',desc:'Lee el mercado como lo hacen las instituciones.',mods:[
+  {t:'Fundamentos institucionales',l:[L('Cómo operan las instituciones',14),L('Liquidez y zonas de interés',18),L('Estructura de mercado institucional',22),L('Order blocks y vacíos de valor',20),L('Quiz del módulo',8)]},
+  {t:'Flujo macro y correlaciones',l:[L('Calendario y datos de impacto',16),L('Correlación entre índices',18),L('Sesgo diario',20)]},
+  {t:'Modelos de entrada',l:[L('Modelo de barrido de liquidez',22),L('Entrada en zona de oferta y demanda',24),L('Gestión de la operación',18)]},
+  {t:'Plan operativo institucional',l:[L('Plan semanal',14),L('Revisión de operaciones',20)]}]},
+ flow:{id:'flow',sec:'premium',title:'Order Flow de Volumen con MZPack',g:'g5',desc:'Opera con volumen real usando MZPack.',mods:[
+  {t:'Introducción al order flow',l:[L('Qué es el order flow',12),L('Instalar y configurar MZPack',16),L('Footprint: cómo leerlo',20),L('Delta y volumen acumulado',18),L('Quiz del módulo',8)]},
+  {t:'Absorción y agresión',l:[L('Identificar absorción',18),L('Iceberg y órdenes grandes',16),L('Desequilibrios apilados',17)]},
+  {t:'Perfil de volumen',l:[L('Volume profile y POC',15),L('Zonas de valor',18)]},
+  {t:'Estrategias con order flow',l:[L('Entradas con footprint',22),L('Caso práctico en vivo',26)]}]}
+};
+var FREE_PER_MODULE1=2; // en cursos premium, primeras 2 lecciones del módulo 1 gratis
+var openMods={},cur={course:null,m:0,l:0},timer=null,playing=false,prog=0;
+
+// ---------- UTILIDADES ----------
+function total(c){var n=0;c.mods.forEach(function(m){n+=m.l.length});return n}
+function doneN(c){var n=0;c.mods.forEach(function(m){m.l.forEach(function(x){if(x.done)n++})});return n}
+function pctOf(c){return Math.round(100*doneN(c)/total(c))}
+function hours(c){var s=0;c.mods.forEach(function(m){m.l.forEach(function(x){s+=x.d})});return (s/60).toFixed(1)}
+function isFree(c,mi,li){return c.sec==='premium'?(mi===0&&li<FREE_PER_MODULE1):true}
+function nextLesson(c){for(var i=0;i<c.mods.length;i++)for(var j=0;j<c.mods[i].l.length;j++)if(!c.mods[i].l[j].done&&isFree(c,i,j))return {m:i,l:j};return {m:0,l:0}}
+function setNav(k){document.querySelectorAll('[data-n]').forEach(function(a){a.classList.toggle('on',a.dataset.n===k)})}
+function stop(){if(timer){clearInterval(timer);timer=null}playing=false}
+function $(h){document.getElementById('view').innerHTML=h;window.scrollTo(0,0)}
+
+// ---------- VISTAS ----------
+function showList(sec){
+  stop();setNav(sec);
+  var cs=Object.keys(COURSES).map(function(k){return COURSES[k]}).filter(function(c){return c.sec===sec});
+  var h=sec==='basic'?'<h1>Cursos Básicos</h1><p class="sub">Aprende a operar el Nasdaq desde cero y domina tu plataforma.</p>':'<h1>Cursos Premium</h1><p class="sub">Formación avanzada. Prueba las primeras lecciones gratis.</p>';
+  h+='<div class="grid">';
+  cs.forEach(function(c){
+    var badge=c.free?'<span class="badge free">GRATIS · 3 LECCIONES</span>':c.sec==='premium'?'<span class="badge free">2 LECCIONES GRATIS</span>':(pctOf(c)>0?'<span class="badge">EN CURSO · '+pctOf(c)+'%</span>':'<span class="badge">NUEVO</span>');
+    h+='<div class="card c" onclick="openCourse(\''+c.id+'\')"><div class="thumb '+c.g+'">'+c.title+badge+'</div><div class="body"><b>'+c.title+'</b><div class="meta">'+c.mods.length+' módulos · '+total(c)+' lecciones · '+hours(c)+' h</div>';
+    if(c.sec==='basic')h+='<div class="bar"><b style="width:'+pctOf(c)+'%"></b></div><div class="pct"><span>'+(pctOf(c)?pctOf(c)+'%':'Sin empezar')+'</span><span>'+doneN(c)+'/'+total(c)+' lecciones</span></div>';
+    else h+='<button class="btn" style="width:100%">Ver curso</button>';
+    h+='</div></div>';
+  });
+  $(h+'</div>');
+}
+function openCourse(id,focusM){
+  stop();var c=COURSES[id];cur.course=id;setNav(c.sec);
+  var n=nextLesson(c);var p=pctOf(c);
+  if(!openMods[id]){openMods[id]={};openMods[id][c.sec==='basic'?n.m:0]=true}
+  if(focusM!==undefined)openMods[id][focusM]=true;
+  var back=c.sec==='basic'?'Cursos Básicos':'Cursos Premium';
+  var h='<button class="back" onclick="showList(\''+c.sec+'\')">← Volver a '+back+'</button><div class="crumb">'+back+' › '+c.title+'</div><h1>'+c.title+'</h1><p class="sub">'+c.desc+'</p>';
+  if(c.sec==='premium')h+='<div class="card promo"><div><b>Las 2 primeras lecciones del módulo 1 son gratis</b><div class="note">Desbloquea el curso completo para ver el resto de las lecciones.</div></div><button class="btn" onclick="unlock()">Desbloquear curso</button></div>';
+  h+='<div class="cols"><div>'+toggleHTML(id);
+  if(getMode(id)==='thumbs'){h+=thumbsHTML(c,id,n)}else
+  c.mods.forEach(function(m,mi){
+    var d=m.l.filter(function(x){return x.done}).length;
+    h+='<div class="card mod'+(openMods[id][mi]?' open':'')+'"><div class="mh" onclick="toggleMod(\''+id+'\','+mi+')"><span><span class="arr">▶</span>Módulo '+(mi+1)+' · '+m.t+'</span><span class="note">'+(c.sec==='basic'?d+'/'+m.l.length+(d===m.l.length?' ✓':''):m.l.length+' lecciones')+'</span></div><div class="lessons">';
+    m.l.forEach(function(x,li){
+      var free=isFree(c,mi,li),isCur=c.sec==='basic'&&n.m===mi&&n.l===li;
+      var icon=!free?'🔒':(x.done?'✓':(isCur?'▶':''));
+      h+='<div class="les'+(x.done?' done':'')+(isCur?' cur':'')+(!free?' lk':'')+'" onclick="openLesson(\''+id+'\','+mi+','+li+')"><div class="d">'+icon+'</div>'+x.t+'<span class="t">'+(c.sec==='premium'&&free?'<span class="fr">GRATIS</span>':'')+x.d+' min</span></div>';
+    });
+    h+='</div></div>';
+  });
+  h+='</div><div><div class="card" style="padding:18px;margin-bottom:14px">';
+  if(c.sec==='basic'){
+    h+='<div class="ring" style="background:conic-gradient(var(--gold) 0 '+p+'%,#2b2f39 0)"><div>'+p+'%</div></div><div style="text-align:center" class="note">'+doneN(c)+' de '+total(c)+' lecciones</div><button class="btn" style="width:100%;margin-top:12px" onclick="openLesson(\''+id+'\','+n.m+','+n.l+')">'+(p?'Continuar':'Empezar')+'</button>';
+  }else{
+    h+='<h2>Prueba gratis</h2><div class="note" style="margin-bottom:12px">Mira las 2 primeras lecciones sin costo.</div><button class="btn" style="width:100%" onclick="openLesson(\''+id+'\',0,0)">Ver lección gratis</button><button class="btn ghost" style="width:100%;margin-top:8px" onclick="unlock()">Desbloquear curso</button>';
+  }
+  h+='</div></div></div>';
+  $(h);
+}
+var VIEW={semin:'thumbs'};
+function getMode(id){return VIEW[id]||'list'}
+function setMode(id,m){VIEW[id]=m;openCourse(id)}
+function toggleHTML(id){var m=getMode(id);return '<div class="vsw"><button class="'+(m==='list'?'on':'')+'" onclick="setMode(\''+id+'\',\'list\')">☰ Lista</button><button class="'+(m==='thumbs'?'on':'')+'" onclick="setMode(\''+id+'\',\'thumbs\')">▦ Miniaturas</button></div>'}
+function thumbsHTML(c,id,n){
+  var h='';
+  c.mods.forEach(function(m,mi){
+    if(c.mods.length>1)h+='<h2 style="margin:18px 0 10px">Módulo '+(mi+1)+' · '+m.t+'</h2>';
+    h+='<div class="tg">';
+    m.l.forEach(function(x,li){
+      var free=isFree(c,mi,li);
+      var st=!free?'<span class="tb lk">🔒 Premium</span>':(x.done?'<span class="tb ok">✓ Completada</span>':((c.free||c.sec==='premium')?'<span class="tb fr">GRATIS</span>':''));
+      h+='<div class="tc'+(!free?' lkd':'')+'" onclick="openLesson(\''+id+'\','+mi+','+li+')"><div class="tt '+c.g+'" style="filter:hue-rotate('+(li*28)+'deg)"><span class="num">'+(li+1)+'</span><div class="pp">▶</div>'+st+'<span class="du">'+x.d+' min</span></div><div class="tl">'+x.t+'</div></div>';
+    });
+    h+='</div>';
+  });
+  return h;
+}
+function toggleMod(id,mi){openMods[id][mi]=!openMods[id][mi];
+  var mods=document.querySelectorAll('.mod');mods[mi].classList.toggle('open',openMods[id][mi])}
+function openLesson(id,mi,li){
+  var c=COURSES[id];
+  if(!isFree(c,mi,li)){lockModal(c);return}
+  stop();prog=0;cur={course:id,m:mi,l:li};var m=c.mods[mi],x=m.l[li];setNav(c.sec);
+  var back=c.sec==='basic'?'Cursos Básicos':'Cursos Premium';
+  var h='<button class="back" onclick="openCourse(\''+id+'\','+mi+')">← Volver a la lista de lecciones</button><div class="crumb">'+back+' › '+c.title+' › Módulo '+(mi+1)+'</div>';
+  h+='<div class="cols"><div><div class="player" onclick="togglePlay()"><div class="vt">'+c.title+' · Módulo '+(mi+1)+'</div><div class="play" id="pb">▶</div><div class="pc"><div class="bar"><b id="pg" style="width:0%"></b></div><div class="pct"><span id="t1">00:00</span><span>'+String(x.d).padStart(2,'0')+':00</span></div></div></div>';
+  h+='<h1 style="margin-top:16px;font-size:21px">'+x.t+'</h1><div class="ltabs"><span class="on">Resumen</span><span>Notas</span><span>Materiales</span><span>Preguntas</span></div>';
+  h+='<p style="color:var(--mut);margin-bottom:14px">En esta lección verás '+x.t.toLowerCase()+' con ejemplos prácticos aplicados al mercado de futuros.</p><div class="mat"><span>📄 Guía de la lección (PDF)</span><span class="note">Descargar</span></div><div class="mat"><span>📊 Plantilla de práctica (XLSX)</span><span class="note">Descargar</span></div>';
+  h+='<div style="display:flex;gap:10px;margin-top:16px;flex-wrap:wrap"><button class="btn ghost" onclick="stepLesson(-1)">← Anterior</button><button class="btn" onclick="complete()">Marcar completada y seguir →</button></div></div>';
+  h+='<div class="card" style="padding:6px 0;align-self:start"><div style="padding:12px 16px;font-weight:700">Módulo '+(mi+1)+' · '+m.t+'</div>';
+  m.l.forEach(function(y,j){var free=isFree(c,mi,j);
+    h+='<div class="les'+(y.done?' done':'')+(j===li?' cur':'')+(!free?' lk':'')+'" onclick="openLesson(\''+id+'\','+mi+','+j+')"><div class="d">'+(!free?'🔒':(y.done?'✓':(j===li?'▶':'')))+'</div>'+y.t+'<span class="t">'+y.d+'</span></div>'});
+  h+='</div></div>';
+  $(h);
+}
+function togglePlay(){
+  var pb=document.getElementById('pb');
+  if(playing){stop();pb.textContent='▶';return}
+  playing=true;pb.textContent='❚❚';
+  var x=COURSES[cur.course].mods[cur.m].l[cur.l];
+  timer=setInterval(function(){prog+=1.5;if(prog>=100){prog=100;stop();pb.textContent='↻'}
+    document.getElementById('pg').style.width=prog+'%';
+    var s=Math.round(prog/100*x.d*60);document.getElementById('t1').textContent=String(Math.floor(s/60)).padStart(2,'0')+':'+String(s%60).padStart(2,'0')},300);
+}
+function seq(c){var a=[];c.mods.forEach(function(m,i){m.l.forEach(function(x,j){a.push([i,j])})});return a}
+function stepLesson(dir){
+  var c=COURSES[cur.course],a=seq(c),k=a.findIndex(function(p){return p[0]===cur.m&&p[1]===cur.l})+dir;
+  if(k<0)return;if(k>=a.length){openCourse(cur.course);return}
+  openLesson(cur.course,a[k][0],a[k][1]);
+}
+function complete(){
+  var c=COURSES[cur.course];c.mods[cur.m].l[cur.l].done=true;stepLesson(1);
+}
+function unlock(){
+  openModal('<button class="x" onclick="closeModal()">×</button><h2>Desbloquea el curso completo</h2><p class="note" style="margin-bottom:16px">Accede a todas las lecciones, materiales y actualizaciones de este curso Premium.</p><button class="btn" style="width:100%" onclick="closeModal()">Desbloquear curso</button><button class="btn ghost" style="width:100%;margin-top:8px" onclick="closeModal()">Ahora no</button>');
+}
+function lockModal(c){
+  openModal('<button class="x" onclick="closeModal()">×</button><div style="font-size:34px">🔒</div><h2>Lección Premium</h2><p class="note" style="margin-bottom:16px">Las 2 primeras lecciones del módulo 1 de «'+c.title+'» son gratis. Desbloquea el curso para ver esta lección y el resto del contenido.</p><button class="btn" style="width:100%" onclick="closeModal()">Desbloquear curso</button><button class="btn ghost" style="width:100%;margin-top:8px" onclick="closeModal()">Seguir con las lecciones gratis</button>');
+}
+function showAcomp(){
+  stop();setNav('acomp');
+  var h='<h1>Acompañamiento Premium</h1><p class="sub">Trabaja de la mano con traders experimentados. No son cursos: son programas de acompañamiento.</p><div class="offers">';
+  h+='<div class="card offer"><span class="pill">MENTORÍA INDIVIDUAL</span><h2 style="font-size:22px;margin:0">Mentoría de Alto Rendimiento</h2><div class="prom">Un mentor del equipo Startup Trader te acompañará desde cero hasta aprender day trading de manera acelerada y llegar a calificar tus primeras cuentas de fondeo en tiempo récord.</div><div class="note" style="margin-top:6px">12 sesiones con un mentor individual</div><ul class="feat"><li>Sesiones 1 a 1 con tu mentor</li><li>Plan de trabajo adaptado a tu operativa</li><li>Revisión de tus operaciones</li><li>Seguimiento entre sesiones</li></ul><button class="btn" style="margin-top:auto" onclick="reserve(\'Mentoría de Alto Rendimiento\')">Reserva ahora con un asesor educativo</button><div class="expl">Sesión de exploración para conocerte y saber si este acompañamiento es para ti.</div></div>';
+  h+='<div class="card offer b"><span class="pill">MEMBRESÍA · LUNES A VIERNES</span><h2 style="font-size:22px;margin:0">Trading Floor Elite</h2><div class="prom">Si eres un trader que ya califica cuentas, pero no tiene consistencia en los retiros, opera junto al equipo más avanzado de traders de Startup Trader y una metodología comprobada que te llevará a obtener retiros consistentes de las compañías de fondeo.</div><div class="note" style="margin-top:6px">Membresía de trading especializado</div><ul class="feat"><li>Sesión de trading en vivo todas las mañanas</li><li>Énfasis en retiros rápidos de empresas de fondeo</li><li>Acompañamiento en tiempo real</li><li>Comunidad de traders del piso</li></ul><div class="week"><div><b>Lun</b>mañana</div><div><b>Mar</b>mañana</div><div><b>Mié</b>mañana</div><div><b>Jue</b>mañana</div><div><b>Vie</b>mañana</div></div><button class="btn" style="margin-top:auto" onclick="reserve(\'Trading Floor Elite\')">Reserva ahora con un asesor educativo</button><div class="expl">Sesión de exploración para conocerte y saber si este acompañamiento es para ti.</div></div>';
+  $(h+'</div>');
+}
+function reserve(name){
+  openModal('<button class="x" onclick="closeModal()">×</button><h2>Sesión de exploración</h2><p class="note" style="margin-bottom:14px">Habla con un asesor educativo para conocerte y ver si podemos ofrecerte «'+name+'».</p><label>Nombre</label><input placeholder="Tu nombre"><label>WhatsApp</label><input placeholder="+57 300 000 0000"><label>Mejor horario</label><select><option>Mañana</option><option>Tarde</option><option>Noche</option></select><button class="btn" style="width:100%" onclick="confirmRes()">Reservar sesión de exploración</button>');
+}
+function confirmRes(){
+  document.getElementById('modal').innerHTML='<button class="x" onclick="closeModal()">×</button><div style="font-size:38px">✅</div><h2>¡Solicitud enviada!</h2><p class="note" style="margin-bottom:16px">Un asesor educativo te contactará para agendar tu sesión de exploración.</p><button class="btn" style="width:100%" onclick="closeModal()">Listo</button>';
+}
+function openModal(h){document.getElementById('modal').innerHTML=h;document.getElementById('ov').classList.add('on')}
+function closeModal(){document.getElementById('ov').classList.remove('on')}
+document.getElementById('ov').onclick=function(e){if(e.target.id==='ov')closeModal()};
+document.querySelectorAll('[data-n]').forEach(function(a){a.onclick=function(){var k=a.dataset.n;k==='acomp'?showAcomp():showList(k)}});
+showList('basic');
+</script></body></html>
